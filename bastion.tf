@@ -20,7 +20,6 @@ resource "aws_instance" "ubuntu_bastion" {
     destination = "/home/ubuntu/hello.txt"
   }
 
-
   provisioner "remote-exec" {
     inline = [
       "sudo cat hello.txt"
@@ -30,3 +29,4 @@ resource "aws_instance" "ubuntu_bastion" {
       Name = "ubuntu_bastion"
   }
 }
+

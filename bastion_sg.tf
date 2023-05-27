@@ -40,4 +40,3 @@ resource "aws_security_group" "bastion_sg" {
 #   cidr_blocks = ["0.0.0.0/0"]
 #   security_group_id = module.eks.cluster_security_group_id
 # }
-
