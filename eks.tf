@@ -1,3 +1,10 @@
+locals {
+  az_subnet_mapping = {
+    "ap-northeast-2a" = "20.0.1.0/24"
+    "ap-northeast-2c" = "20.0.2.0/24"
+  }
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.10.0"
@@ -23,7 +30,7 @@ module "eks" {
       min_size     = 1
       max_size     = 2
       desired_size = 1
-      subnets = module.vpc.private_subnets[0]
+      subnets = [local.az_subnet_mapping["ap-northeast-2a"]]
     }
 
     two = {
@@ -34,7 +41,7 @@ module "eks" {
       min_size     = 1
       max_size     = 2
       desired_size = 1
-      subnets = module.vpc.private_subnets[1]
+      subnets = [local.az_subnet_mapping["ap-northeast-2c"]]
     }
   }
 }
