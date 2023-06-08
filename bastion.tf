@@ -16,13 +16,13 @@ resource "aws_instance" "ubuntu_bastion" {
   }
 
   provisioner "file" {
-    source      = "./hello.txt"
-    destination = "/home/ubuntu/hello.txt"
+    source      = "./deploy.sh"
+    destination = "/home/ubuntu/deploy.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo cat hello.txt"
+      "sudo sh deploy.sh"
     ]
   }
   tags = {
