@@ -1,5 +1,5 @@
 # GroomInfra_TEST!!
-This is Terraform Provisioning Test Repo!!!
+This is Terraform Provisioning Test Repo
 
 ## Tech Stack
 <div align="center">
