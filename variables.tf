@@ -13,3 +13,9 @@ variable "azs" {
     description = "Groom AZS"
     default = ["ap-northeast-2a","ap-northeast-2c"]
 }
+variable "db_password" {
+  # password 추가
+  default = "dmlwn3232"
+  description = "RDS root user password"
+  sensitive   = true
+}
