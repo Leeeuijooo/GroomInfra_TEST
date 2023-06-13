@@ -48,6 +48,7 @@ resource "aws_db_parameter_group" "groom_db_parameter_group" {
 resource "aws_db_instance" "groom_rds" {
   
   identifier             = "groomrds"
+  db_name                = "groomdb" #초기데이터베이스
   instance_class         = "db.t2.micro"
   allocated_storage      = 20
   storage_type           = "gp2"
