@@ -43,8 +43,12 @@ echo "aws version completed"
 
 REGION="ap-northeast-2"
 sleep 1
-aws configure set aws_access_key_id "YOUR ACCESS KEY ID"
+aws configure set aws_access_key_id "your key"
 sleep 1
-aws configure set aws_secret_access_key "YOUR SECRET ACCESS KEY"
+aws configure set aws_secret_access_key "your key"
 aws configure set region ${REGION}
-sleep 1
+sleep 2
+echo "update kubeconfig"
+aws eks --region ap-northeast-2 update-kubeconfig --name eks_name
+sleep 3
+kubectl get nodes
