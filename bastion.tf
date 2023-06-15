@@ -1,5 +1,6 @@
 resource "aws_instance" "ubuntu_bastion" {
-
+  
+  
   ami = "ami-0c9c942bd7bf113a2"
   availability_zone = var.azs[0]
   instance_type = "t2.micro"
@@ -25,8 +26,25 @@ resource "aws_instance" "ubuntu_bastion" {
       "sudo sh deploy.sh"
     ]
   }
+
+  provisioner "file" {
+    source      = "./lb_controller.sh"
+    destination = "/home/ubuntu/lb_controller.sh"
+  }
+
+  provisioner "file" {
+    source      = "./lb_controller.yaml"
+    destination = "/home/ubuntu/lb_controller.yaml"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo sh lb_controller.sh"
+    ]
+  }
+
   tags = {
       Name = "ubuntu_bastion"
   }
+  depends_on = [module.eks]
 }
-
