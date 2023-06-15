@@ -36,14 +36,14 @@ cat >load-balancer-role-trust-policy.json <<EOF
 }
 EOF
 
-sleep 1
+sleep 2
 
 echo IAM 역할 생성
 aws iam create-role \
   --role-name AmazonEKSLoadBalancerControllerRole \
   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
 
-sleep 1
+sleep 2
 
 echo Amazon EKS 관리형 IAM 정책을 IAM 역할에 연결
 
@@ -51,7 +51,7 @@ aws iam attach-role-policy \
   --policy-arn arn:aws:iam::$arn_id:policy/AWSLoadBalancerControllerIAMPolicy \
   --role-name AmazonEKSLoadBalancerControllerRole
 
-sleep 1
+sleep 2
 
 echo aws-load-balancer-controller-service-account.yaml 파일을 생성
 
@@ -72,11 +72,11 @@ sleep 1
 
 echo 클러스터에서 Kubernetes 서비스 계정을 만들기
 kubectl apply -f aws-load-balancer-controller-service-account.yaml
-sleep 3
+sleep 4
 
-echo cert-manager 배포
+echo cert-manager 배포 시간이 약간 소요됩니다^^
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
-sleep 5
+sleep 40
 
 echo load balancer controller 배포
 kubectl apply -f /home/ubuntu/lb_controller.yaml
