@@ -14,7 +14,7 @@ This is Terraform Provisioning Test Repo
 4. .terraform/modules/vpc/main.tf line 36 - annotation required
 5. .terraform/modules/vpc/main.tf line 1246 - annotation required
 
-## Module 수정
+## Module 수정 - 에러 수정 중
 1. .terraform/modules/eks/main.tf line 389 에 resolve_conflicts_on_create = try(each.value.resolve_conflicts_resolve_conflicts_on_create, "OVERWRITE") 수정
 2. .terraform/modules/eks/main.tf line 390 에 resolve_conflicts_on_update = try(each.value.resolve_conflicts_on_update, "OVERWRITE") 추가
   
