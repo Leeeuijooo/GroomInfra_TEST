@@ -27,6 +27,7 @@ resource "aws_instance" "ubuntu_bastion" {
     ]
   }
 
+
   provisioner "file" {
     source      = "./lb_controller.sh"
     destination = "/home/ubuntu/lb_controller.sh"
@@ -43,6 +44,26 @@ resource "aws_instance" "ubuntu_bastion" {
     ]
   }
 
+  provisioner "file" {
+    source      = "./ebs_csi_driver.sh"
+    destination = "/home/ubuntu/ebs_csi_driver.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo sh ebs_csi_driver.sh"
+    ]
+  }
+  provisioner "file" {
+    source      = "./vpc_cni.sh"
+    destination = "/home/ubuntu/vpc_cni.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo sh vpc_cni.sh"
+    ]
+  }
   tags = {
       Name = "ubuntu_bastion"
   }

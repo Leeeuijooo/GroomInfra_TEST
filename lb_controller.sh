@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "vpc_cni 애드온 설치"
+echo "lb-controller 설치"
 
 # EKS 클러스터의 이름
 cluster_name="eks_name"
@@ -24,6 +24,17 @@ REGION="ap-northeast-2"
 
 echo "$REGION"
 
+echo "IAM 정책을 생성"
+
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.7/docs/install/iam_policy.json
+
+sleep 3
+
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+
+sleep 5
 
 echo load-balancer-role-trust-policy.json 생성
 
