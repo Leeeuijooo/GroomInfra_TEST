@@ -76,23 +76,6 @@ aws iam attach-role-policy \
 
 sleep 2
 
-echo aws-load-balancer-controller-service-account.yaml 파일을 생성
-
-cat >aws-load-balancer-controller-service-account.yaml <<EOF
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    app.kubernetes.io/component: controller
-    app.kubernetes.io/name: aws-load-balancer-controller
-  name: aws-load-balancer-controller
-  namespace: kube-system
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::$arn_id:role/AmazonEKSLoadBalancerControllerRole
-EOF
-
-sleep 1
-
 echo 클러스터에서 Kubernetes 서비스 계정을 만들기
 kubectl apply -f aws-load-balancer-controller-service-account.yaml
 sleep 10
