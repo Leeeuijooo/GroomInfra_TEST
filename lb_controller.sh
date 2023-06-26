@@ -1,16 +1,28 @@
 #!/bin/bash
 
-result=$(aws iam list-open-id-connect-providers)
+echo "vpc_cni 애드온 설치"
+
+# EKS 클러스터의 이름
+cluster_name="eks_name"
+
+# 클러스터 ARN 조회
+cluster_arn=$(aws eks describe-cluster --name $cluster_name --query "cluster.arn" --output text)
+
+# 계정 번호 추출
+arn_id=$(echo $cluster_arn | cut -d':' -f5)
+
+echo "$arn_id"
+
+
+oidc_id=$(aws eks describe-cluster --name eks_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+
+echo "$oidc_id"
+
 sleep 1
-arn=$(echo $result | grep -oP '(?<=arn:aws:iam::)\d+')
-arn_id=${arn%%:*}
 
-echo "arn_id: $arn_id"
+REGION="ap-northeast-2"
 
-arn=$(echo $result | grep -oP '"Arn": "\K[^"]+')
-oidc_id=$(echo $arn | awk -F '/' '{print $NF}')
-
-echo "oidc_id: $oidc_id"
+echo "$REGION"
 
 
 echo load-balancer-role-trust-policy.json 생성
@@ -41,7 +53,7 @@ sleep 2
 echo IAM 역할 생성
 aws iam create-role \
   --role-name AmazonEKSLoadBalancerControllerRole \
-  --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+  --assume-role-policy-document file://"load-balancer-role-trust-policy.json" &
 
 sleep 2
 
@@ -72,7 +84,7 @@ sleep 1
 
 echo 클러스터에서 Kubernetes 서비스 계정을 만들기
 kubectl apply -f aws-load-balancer-controller-service-account.yaml
-sleep 4
+sleep 10
 
 echo cert-manager 배포 시간이 약간 소요됩니다^^
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
