@@ -1,4 +1,11 @@
 #!/bin/bash
+sudo apt-update
+sleep 5
+echo "apt-update 완료"
+
+sudo curl -ssL https://get.docker.com/ | bash
+sleep 10
+echo "docker 설치 완료"
 
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sleep 3
