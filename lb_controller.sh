@@ -100,6 +100,12 @@ echo cert-manager 배포 시간이 약간 소요됩니다^^
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
 sleep 40
 
+echo "kubectl wait"
+kubectl wait \
+  --request-timeout=300s \
+  -n cert-manager \
+  --for=condition=Available deployment/cert-manager-webhook
+
 echo "컨트롤러 설치"
 curl -Lo v2_4_7_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.7/v2_4_7_full.yaml
 sleep 5
