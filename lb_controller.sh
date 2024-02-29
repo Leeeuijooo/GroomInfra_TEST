@@ -14,7 +14,7 @@ arn_id=$(echo $cluster_arn | cut -d':' -f5)
 echo "$arn_id"
 
 
-oidc_id=$(aws eks describe-cluster --name eks_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
 
 echo "$oidc_id"
 
