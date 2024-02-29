@@ -65,7 +65,7 @@ sleep 2
 
 echo csi driver 애드온 설치
 
-aws eks create-addon --cluster-name eks_name --addon-name aws-ebs-csi-driver \
+aws eks create-addon --cluster-name $cluster_name --addon-name aws-ebs-csi-driver \
   --service-account-role-arn arn:aws:iam::$arn_id:role/AmazonEKS_EBS_CSI_DriverRole
 
 sleep 3
